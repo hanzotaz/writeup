@@ -1,4 +1,8 @@
 # corCTF 2023
+
+## Background
+corCTF 2022 was a CTF event organized by Crusader of Rust team and was held from Sat, 29 July 2023, 12:00 UTC — Mon, 31 July 2023, 12:00 UTC. There are a total of 39 challenges, with catrgories made up of reverse engineering, web, pwn, crypto and blockchain. Being a novice in CTF and cybersecurity in general, I only managed to complete 1 challenge, which is Force under the web category.
+
 ## web/force
 
 In this challenge we are given tarball file to be download. It contains the source code of the web app that we can run as Docker using the Dockerfile provided.
@@ -18,7 +22,8 @@ CMD ["node", "--expose-gc", "web.js"]
 We can then build the image and run it for testing. I use localhost port 8090 for this container.
 
 ```bash
-> docker build -t web/force .                                                              docker.io/library/node:18@sha256:c85dc4392f44f5de1d0d72dd20a088a542734445f99bed7aa8ac895c706d370d    
+> docker build -t web/force .
+docker.io/library/node:18@sha256:c85dc4392f44f5de1d0d72dd20a088a542734445f99bed7aa8ac895c706d370d    
 writing image sha256:7d7d7a1e650b11de69f6cd2deda18c7c5647c127422c8234927bb25a7f236a34
 naming to docker.io/web/force
 > docker run -d -p 8090:80 web/force
@@ -33,7 +38,7 @@ At first I thought the query in the text box is just a normal JSON format. But a
 
 ![first_try](img/force_first_try.png)
 
-Knowing nothing about GraphQL, I do some research online on how GraphQL works and looking up if there are any known vulnerabilities. One of the features of GraphQL is batch querying where you can do several queries at the same time using only one HTTP request. Thus, this makes for a suitable attack vector for bruteforcing the pin combination. I then look to the `web.js` for more information of the app.
+Knowing nothing about GraphQL, I do some research online on how GraphQL works and looking up if there are any known vulnerabilities. One of the features of GraphQL is batch querying[^1] where you can do several queries at the same time using only one HTTP request. Thus, this makes for a suitable attack vector for bruteforcing the pin combination[^2]. I then look to the `web.js` for more information of the app.
 
 ```javascript
 import fastify from 'fastify'
@@ -143,4 +148,10 @@ flag: corctf{test}
 ```
 
 Running this in the challenge's instance we'll get the flag: 
-`corctf{S                T                  O               N                   K                 S}`
+> corctf{S                T                  O               N                   K                 S}
+
+## Fin
+Even though I only managed to solve 1 challenge, it is a fun experience and I learned a lot from it. I'm looking forward to learn more about cybersecurity and much looking forward to next year's corCTF. Thank you for reading.
+
+[^1]: https://graphql.org/learn/queries/#aliases 
+[^2]: https://cheatsheetseries.owasp.org/cheatsheets/GraphQL_Cheat_Sheet.html#batching-attacks
