@@ -27,11 +27,11 @@ naming to docker.io/web/force
 
 Navigating using the browser we are greeted with the following page
 
-![[img/force_main.png]]
+!(img/force_main.png)
 
 At first I thought the query in the text box is just a normal JSON format. But after looking into the source code I realized that it is GraphQL query. Before trying any exploit, I first try web app as intended to see how it behaves.
 
-![[img/force_first_try.png]]
+!(img/force_first_try.png)
 
 Knowing nothing about GraphQL, I do some research online on how GraphQL works and looking up if there are any known vulnerabilities. One of the features of GraphQL is batch querying where you can do several queries at the same time using only one HTTP request. Thus, this makes for a suitable attack vector for bruteforcing the pin combination. I then look to the `web.js` for more information of the app.
 
